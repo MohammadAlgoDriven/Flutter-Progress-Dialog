@@ -158,8 +158,10 @@ class ProgressDialog {
       barrierColor: barrierColor,
       context: _context,
       useRootNavigator: _useRootNavigator,
-      builder: (context) => PopScope(
-        canPop: barrierDismissible,
+      builder: (context) => WillPopScope(
+        onWillPop: () async {
+          return barrierDismissible;
+        },
         child: AlertDialog(
           surfaceTintColor: surfaceTintColor,
           backgroundColor: backgroundColor,
@@ -292,11 +294,6 @@ class ProgressDialog {
             },
           ),
         ),
-        onPopInvoked: (didPop) {
-          if (didPop) {
-            _dialogIsOpen = false;
-          }
-        },
       ),
     );
   }
